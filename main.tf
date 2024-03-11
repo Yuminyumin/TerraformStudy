@@ -4,6 +4,7 @@ resource "local_file" "abc" {
 }
 
 resource "local_file" "def" {
+  depends_on = [ local_file.abc ]
   content  = local_file.abc.content
   filename = "${path.module}/def.txt"
 }
