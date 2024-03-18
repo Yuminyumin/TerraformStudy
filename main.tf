@@ -1,10 +1,19 @@
-resource "local_file" "abc" {
-  content  = "123!"
-  filename = "${path.module}/abc.txt"
+# variable "file_name" {
+#   default = "step0.txt"
+# }
+
+resource "local_file" "step7" {
+  content  = ""
+  filename = "${path.module}/step7.txt"
+
+  lifecycle {
+    precondition {
+      condition     = self.content != ""
+      error_message = "content cannot empty"
+    }
+  }
 }
 
-resource "local_file" "def" {
-  depends_on = [ local_file.abc ]
-  content  = local_file.abc.content
-  filename = "${path.module}/def.txt"
+output "step7_content"{
+  value = local_file.step7.id
 }
